@@ -31,6 +31,7 @@
 
 namespace GameFrameX.OperationKeyboard.UGUI.Runtime
 {
+    using GameFrameX.Runtime;
     using UnityEngine;
     using UnityEngine.EventSystems;
     using UnityEngine.UI;
@@ -44,7 +45,9 @@ namespace GameFrameX.OperationKeyboard.UGUI.Runtime
     /// 重放 ISelectHandler），零面板改动自动适配。绑定器均为 public，游戏代码可显式 AddComponent 手动绑定
     /// （手动模式始终可用，挂载器对已绑定字段不重复干预）。
     /// Bootstrap polls the current UGUI selection and auto-attaches the matching binder so existing panels need
-    /// zero changes; manual binding stays available since the binders are public.
+    /// zero changes; manual binding stays available since the binders are public. The bootstrap node starts as a
+    /// DontDestroyOnLoad root and relocates under the [GameFrameX] UI/Keyboard group once the runtime host exists.
+    /// 自举节点先以 DontDestroyOnLoad 根节点常驻（Host 尚未创建），Host 就绪后归位到 [GameFrameX] 的 UI/Keyboard 分组下。
     /// </remarks>
     [UnityEngine.Scripting.Preserve]
     internal sealed class OperationKeyboardUGUIAutoBinder : MonoBehaviour
@@ -55,6 +58,11 @@ namespace GameFrameX.OperationKeyboard.UGUI.Runtime
         private const float PollIntervalSeconds = 0.1f;
 
         private float _nextPollTime;
+
+        /// <summary>
+        /// 是否已归位到 [GameFrameX] Host 的 UI/Keyboard 分组节点下。
+        /// </summary>
+        private bool _mountedUnderHostNode;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         [UnityEngine.Scripting.Preserve]
@@ -73,6 +81,8 @@ namespace GameFrameX.OperationKeyboard.UGUI.Runtime
         [UnityEngine.Scripting.Preserve]
         private void Update()
         {
+            MountUnderHostNode();
+
             if (Time.unscaledTime < _nextPollTime)
             {
                 return;
@@ -103,6 +113,32 @@ namespace GameFrameX.OperationKeyboard.UGUI.Runtime
             {
                 selected.AddComponent<UGUIInputFieldKeyboardBinder>().HandleSelected();
             }
+        }
+
+        /// <summary>
+        /// 将自举节点归位到 [GameFrameX] Host 的 UI/Keyboard 分组节点下。
+        /// </summary>
+        /// <remarks>
+        /// Host 由核心包在 AfterSceneLoad 创建（晚于本组件 BeforeSceneLoad 自举），故在 Update 中低频重试；
+        /// "UI" 与 UIComponent 的组件节点同名（核心包按组件名去 Component 后缀建节点），缺失时由 Host API
+        /// 创建纯组织节点补齐路径。Host 未就绪前保持 DontDestroyOnLoad 根节点常驻，行为不变。
+        /// </remarks>
+        [UnityEngine.Scripting.Preserve]
+        private void MountUnderHostNode()
+        {
+            if (_mountedUnderHostNode)
+            {
+                return;
+            }
+
+            var keyboardNode = GameFrameXRuntimeHost.GetOrCreateHostNode("UI/Keyboard");
+            if (keyboardNode == null)
+            {
+                return;
+            }
+
+            transform.SetParent(keyboardNode, false);
+            _mountedUnderHostNode = true;
         }
     }
 }
