@@ -38,7 +38,7 @@ GameFrameX OperationKeyboard (UGUI Binding) is the UI binding package of the key
 ### Key Features
 
 - **Dual Binder** - `UGUIInputFieldKeyboardBinder` (`InputField`) and `TMPInputFieldKeyboardBinder` (`TMP_InputField`) are equal first-class citizens; focus attaches the keyboard session, blur detaches
-- **Auto-Binder Bootstrap** - a `DontDestroyOnLoad` bootstrap polls `EventSystem.currentSelectedGameObject` at a low frequency, discovers input fields and binds them automatically (no per-panel setup)
+- **Auto-Binder Bootstrap** - a `DontDestroyOnLoad` bootstrap polls `EventSystem.currentSelectedGameObject` at a low frequency, discovers input fields and binds them automatically (no per-panel setup); once the `[GameFrameX]` runtime host is up, the bootstrap node relocates under `[GameFrameX]/UI/Keyboard`
 - **Native Event Flow** - input events assign `text` (`onValueChanged` fires as usual) and move the caret to the end; confirm / complete finalize the value and trigger `EndEdit` (same as native mobile); blur detaches without duplicating `EndEdit`
 - **Toolkit Probing** - `versionDefines` probe `com.unity.ugui` / `com.unity.textmeshpro`; each binder compiles only when its toolkit is present (discovery means registration)
 
@@ -119,7 +119,7 @@ gameObject.GetOrAddComponent<GameFrameX.OperationKeyboard.UGUI.Runtime.TMPInputF
 ### Main Classes
 
 - **`UGUIInputFieldKeyboardBinder`** / **`TMPInputFieldKeyboardBinder`**: `IOperationKeyboardField` implementations; attach on focus, detach on blur, re-attach on re-tap.
-- **`OperationKeyboardUGUIAutoBinder`**: bootstrap auto-binder; `DontDestroyOnLoad` + low-frequency `EventSystem` polling.
+- **`OperationKeyboardUGUIAutoBinder`**: bootstrap auto-binder; `DontDestroyOnLoad` + low-frequency `EventSystem` polling; relocates under the `[GameFrameX]/UI/Keyboard` group node once the runtime host exists.
 - **`GameFrameXOperationKeyboardUGUICroppingHelper`**: code cropping helper for build optimization.
 
 ### Notes

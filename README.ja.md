@@ -38,7 +38,7 @@ GameFrameX OperationKeyboard（UGUI バインディング）はキーボード�
 ### 主な機能
 
 - **デュアルバインダー** - `UGUIInputFieldKeyboardBinder`（`InputField`）と `TMPInputFieldKeyboardBinder`（`TMP_InputField`）は同等のファーストクラス扱い。フォーカスでキーボードセッションを確立し、ブラーで解除します
-- **自己ブートストラップ自動バインダー** - `DontDestroyOnLoad` で `EventSystem.currentSelectedGameObject` を低頻度ポーリングし、入力フィールドを発見したら即バインドします（パネルごとの設定は不要）
+- **自己ブートストラップ自動バインダー** - `DontDestroyOnLoad` で `EventSystem.currentSelectedGameObject` を低頻度ポーリングし、入力フィールドを発見したら即バインドします（パネルごとの設定は不要）。ホスト起動後はブートストラップノードを `[GameFrameX]/UI/Keyboard` グループ配下へ移動
 - **ネイティブイベントフロー** - input イベントは `text` に代入し（`onValueChanged` は通常どおり発火）、キャレットを末尾へ。confirm / complete は最終値を確定して `EndEdit` を発火（ネイティブモバイルと同じ）。ブラーは `EndEdit` を重複させずにセッションを解除します
 - **ツールキット探索** - `versionDefines` が `com.unity.ugui` / `com.unity.textmeshpro` を探索し、各バインダーは対応ツールキットが存在する场合のみコンパイルされます（発見即登録）
 
@@ -119,7 +119,7 @@ gameObject.GetOrAddComponent<GameFrameX.OperationKeyboard.UGUI.Runtime.TMPInputF
 ### 主要なクラス
 
 - **`UGUIInputFieldKeyboardBinder`** / **`TMPInputFieldKeyboardBinder`**：`IOperationKeyboardField` 実装。フォーカスで Attach、ブラーで Detach、再タップで再 Attach。
-- **`OperationKeyboardUGUIAutoBinder`**：ブートストラップ自動バインダー。`DontDestroyOnLoad` + 低頻度 `EventSystem` ポーリング。
+- **`OperationKeyboardUGUIAutoBinder`**：ブートストラップ自動バインダー。`DontDestroyOnLoad` + 低頻度 `EventSystem` ポーリング。ホスト起動後に `[GameFrameX]/UI/Keyboard` グループ配下へ移動します。
 - **`GameFrameXOperationKeyboardUGUICroppingHelper`**：ビルド最適化用のコードクリッピングヘルパー。
 
 ### 注意事項

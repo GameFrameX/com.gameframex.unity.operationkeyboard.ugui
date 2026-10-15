@@ -38,7 +38,7 @@ GameFrameX OperationKeyboard(UGUI 바인딩)는 키보드 패밀리의 UI 바인
 ### 주요 기능
 
 - **듀얼 바인더** - `UGUIInputFieldKeyboardBinder`(`InputField`)와 `TMPInputFieldKeyboardBinder`(`TMP_InputField`)는 동등한 일급 시민입니다. 포커스 시 키보드 세션을 수립하고 블러 시 해제합니다
-- **자가 부트스트랩 자동 바인더** - `DontDestroyOnLoad`로 `EventSystem.currentSelectedGameObject`를 저빈도 폴링하여 입력 필드를 발견하면 즉시 바인딩합니다(패널별 설정 불필요)
+- **자가 부트스트랩 자동 바인더** - `DontDestroyOnLoad`로 `EventSystem.currentSelectedGameObject`를 저빈도 폴링하여 입력 필드를 발견하면 즉시 바인딩합니다(패널별 설정 불필요). 호스트 준비 후 부트스트랩 노드는 `[GameFrameX]/UI/Keyboard` 그룹 아래로 이동
 - **네이티브 이벤트 흐름** - input 이벤트는 `text`에 대입하고(`onValueChanged`는 평소처럼 발생) 캐럿을 끝으로 이동. confirm / complete는 최종 값을 확정하고 `EndEdit`를 발생(네이티브 모바일과 동일). 블러는 `EndEdit`를 중복 발생시키지 않고 세션을 해제합니다
 - **툴킷 탐색** - `versionDefines`가 `com.unity.ugui` / `com.unity.textmeshpro`를 탐색하며 각 바인더는 해당 툴킷이 있을 때만 컴파일됩니다(발견 곧 등록)
 
@@ -119,7 +119,7 @@ gameObject.GetOrAddComponent<GameFrameX.OperationKeyboard.UGUI.Runtime.TMPInputF
 ### 주요 클래스
 
 - **`UGUIInputFieldKeyboardBinder`** / **`TMPInputFieldKeyboardBinder`**: `IOperationKeyboardField` 구현. 포커스 시 Attach, 블러 시 Detach, 재탭 시 재 Attach.
-- **`OperationKeyboardUGUIAutoBinder`**: 부트스트랩 자동 바인더. `DontDestroyOnLoad` + 저빈도 `EventSystem` 폴링.
+- **`OperationKeyboardUGUIAutoBinder`**: 부트스트랩 자동 바인더. `DontDestroyOnLoad` + 저빈도 `EventSystem` 폴링. 호스트 준비 후 `[GameFrameX]/UI/Keyboard` 그룹 아래로 이동합니다.
 - **`GameFrameXOperationKeyboardUGUICroppingHelper`**: 빌드 최적화용 코드 크로핑 헬퍼.
 
 ### 주의 사항

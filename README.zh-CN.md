@@ -38,7 +38,7 @@ GameFrameX OperationKeyboard（UGUI 绑定）是键盘家族的 UI 绑定包：�
 ### 核心特性
 
 - **双绑定器** - `UGUIInputFieldKeyboardBinder`（`InputField`）与 `TMPInputFieldKeyboardBinder`（`TMP_InputField`）同为一等公民；聚焦建立键盘会话，失焦解绑
-- **自举自动挂载器** - `DontDestroyOnLoad` 自举低频轮询 `EventSystem.currentSelectedGameObject`，发现输入框即绑定（无需逐面板配置）
+- **自举自动挂载器** - `DontDestroyOnLoad` 自举低频轮询 `EventSystem.currentSelectedGameObject`，发现输入框即绑定（无需逐面板配置）；`[GameFrameX]` Host 就绪后自举节点归位到 `[GameFrameX]/UI/Keyboard` 分组下
 - **原生事件流** - input 事件赋值 `text`（`onValueChanged` 照常触发）并置尾光标；confirm / complete 终值落定并触发 `EndEdit`（与原生移动端一致）；失焦解绑且不重复触发 `EndEdit`
 - **工具集探测** - `versionDefines` 探测 `com.unity.ugui` / `com.unity.textmeshpro`；各绑定器仅在对应工具集存在时编译（发现即注册）
 
@@ -119,7 +119,7 @@ gameObject.GetOrAddComponent<GameFrameX.OperationKeyboard.UGUI.Runtime.TMPInputF
 ### 主要类
 
 - **`UGUIInputFieldKeyboardBinder`** / **`TMPInputFieldKeyboardBinder`**：`IOperationKeyboardField` 实现；聚焦 Attach、失焦 Detach、再点按重新 Attach。
-- **`OperationKeyboardUGUIAutoBinder`**：自举自动挂载器；`DontDestroyOnLoad` + 低频 `EventSystem` 轮询。
+- **`OperationKeyboardUGUIAutoBinder`**：自举自动挂载器；`DontDestroyOnLoad` + 低频 `EventSystem` 轮询；Host 就绪后归位到 `[GameFrameX]/UI/Keyboard` 分组节点下。
 - **`GameFrameXOperationKeyboardUGUICroppingHelper`**：构建裁剪优化用的防裁剪助手。
 
 ### 注意事项
