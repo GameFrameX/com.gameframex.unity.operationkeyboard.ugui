@@ -1,7 +1,7 @@
 {
   "name": "com.gameframex.unity.operationkeyboard.ugui",
   "displayName": "Game Frame X Operation Keyboard (UGUI Binding)",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "unity": "2019.4",
   "description": "UGUI InputField / TMP_InputField keyboard binders plus a bootstrap auto-binder for GameFrameX OperationKeyboard. Zero panel changes: OperationKeyboardUGUIAutoBinder polls the current selection and attaches the matching binder; com.unity.ugui / com.unity.textmeshpro presence is probed via versionDefines (presence implies enabled; binder code is stripped when the package is absent and the native keyboard path is fully preserved).\n\nGameFrameX OperationKeyboard 的 UGUI InputField / TMP_InputField 键盘绑定包，含自举自动挂载器。零面板改动：OperationKeyboardUGUIAutoBinder 低频轮询当前选中字段并挂载对应绑定器；com.unity.ugui / com.unity.textmeshpro 是否安装经 versionDefines 探测（发现即挂载，未安装时对应绑定器代码被裁剪，原生键盘路径完整保留）。",
   "author": {

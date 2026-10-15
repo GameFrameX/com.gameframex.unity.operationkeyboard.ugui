@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/gameframex/com.gameframex.unity.operationkeyboard.ugui/compare/1.1.0...1.1.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **deps:** 同步依赖版本至最新 ([24849b0](https://github.com/gameframex/com.gameframex.unity.operationkeyboard.ugui/commit/24849b0a5c0ad19a3c749f951dbb3822dafcc5e7))
+
 # [1.1.0](https://github.com/gameframex/com.gameframex.unity.operationkeyboard.ugui/compare/1.0.0...1.1.0) (2026-10-15)
 
 
