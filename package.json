@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "com.gameframex.unity": "3.0.0",
-    "com.gameframex.unity.operationkeyboard": "1.0.0"
+    "com.gameframex.unity.operationkeyboard": "1.0.1"
   },
   "repository": {
     "type": "git",
